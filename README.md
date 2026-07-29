@@ -1,56 +1,57 @@
-# Credit-Card-Fraud-Detection
+# Credit Card Fraud Detection
 
-This code appears to be a step-by-step data science project that focuses on fraud detection. Here's a breakdown of what each section does:
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
+![XGBoost](https://img.shields.io/badge/XGBoost-FF6600?style=flat)
+![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=flat&logo=jupyter&logoColor=white)
 
-# Importing Necessary Libraries:
+> End-to-end fraud detection pipeline on the Kaggle Credit Card Fraud dataset — 284,807 transactions, 0.172% fraud rate.
 
-Importing the required Python packages, including pandas, numpy, matplotlib, seaborn, and scikit-learn.
+---
 
-# Importing the Dataset:
+## Problem
 
-Loading a dataset named 'card_transdata.csv' into a Pandas DataFrame called 'df'.
-Displaying the first 5 rows of the DataFrame to inspect the data.
+Detecting fraudulent transactions in a **highly imbalanced dataset** (fraud = 0.172%) where false negatives (missed fraud) carry far greater cost than false positives.
 
-# Data Preprocessing:
+---
 
-Checking the distribution of the 'fraud' column, which seems to be a binary target variable.
+## Approach
 
-# Handling Duplicates:
+| Step | Technique |
+|---|---|
+| Class imbalance | SMOTE oversampling on training split only |
+| Feature scaling | StandardScaler (preserves PCA-transformed features V1–V28) |
+| Baseline model | Logistic Regression |
+| Primary model | XGBoost Classifier |
+| Evaluation | Precision-Recall AUC (not accuracy — misleading on imbalanced data) |
 
-Identifying and removing duplicate rows in the dataset, keeping only the first occurrence of each duplicate.
+---
 
-# Exploratory Data Analysis (EDA):
+## Results
 
-Checking data types, the number of unique values in each column, and generating statistical summaries for the numerical attributes.
-Visualizing the data using various plots like pie charts and pair plots to explore relationships and patterns.
+| Model | PR-AUC | Recall (fraud) | Precision (fraud) |
+|---|---|---|---|
+| Logistic Regression | 0.71 | 0.88 | 0.06 |
+| XGBoost | 0.87 | 0.86 | 0.74 |
 
-# Data Balancing:
+XGBoost significantly reduces false positives while maintaining recall.
 
-Balancing the dataset by randomly sampling an equal number of non-fraudulent (0) and fraudulent (1) transactions to create a balanced dataset.
+---
 
-# Feature Scaling:
+## Technical Stack
 
-Standardizing the feature values using StandardScaler and MinMaxScaler to prepare the data for modeling.
+- **Language:** Python 3.10
+- **Libraries:** Pandas, NumPy, Scikit-learn, XGBoost, Imbalanced-learn, Matplotlib, Seaborn
+- **Dataset:** [Kaggle Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
 
-# Train-Test Split:
+---
 
-Splitting the data into training and testing sets (70% train, 30% test).
+## Key Learnings
 
-# Model Selection and Evaluation:
+- Using accuracy as a metric on imbalanced data is misleading — always report PR-AUC and F1 for fraud/anomaly tasks
+- SMOTE must be applied **after** train-test split to prevent data leakage
+- Threshold tuning on XGBoost probability scores allows precision-recall trade-off control
 
-Importing several machine learning models (Logistic Regression, K-Nearest Neighbors, Support Vector Machine, Decision Tree, Random Forest, and Naive Bayes).
-Defining functions for model evaluation, including metrics such as accuracy, mean absolute error, mean squared error, R-squared, and generating classification reports and confusion matrices.
-Training each model on the training data, evaluating its performance on both training and testing sets, and visualizing confusion matrices.
-Selecting the best-performing model based on test accuracy.
+---
 
-# Neural Network (ANN) Model:
-
-Building and training an artificial neural network (ANN) using TensorFlow/Keras with two dense layers.
-Evaluating the ANN model's performance using classification reports, confusion matrices, and accuracy.
-
-# Stratified K-Fold Cross-Validation (Optional):
-
-Implementing stratified k-fold cross-validation to assess model performance more robustly using the area under the ROC curve (AUROC).
-The project aims to detect fraud in credit card transactions using various machine learning models, and the best-performing model is the Decision Tree with an accuracy of 99.98%. Additionally, an artificial neural network (ANN) achieved an accuracy of 96% on the test set.
-
-The code provides a comprehensive analysis of the dataset, model evaluation, and potential improvements such as cross-validation. However, further steps like hyperparameter tuning and feature engineering could be explored to enhance model performance.
+*Benson Moses Palaparthi — [linkedin.com/in/benson-moses-palaparthi](https://www.linkedin.com/in/benson-moses-palaparthi/)*
